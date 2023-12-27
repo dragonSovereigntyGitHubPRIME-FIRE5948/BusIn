@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/loMain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        style="@style/styleTopBarBackground"
+        android:id="@+id/loTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:src="@drawable/ic_bus" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            style="@style/styleTopBarTitle"
+            android:layout_marginStart="10sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Title" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/svForm"
+        android:layout_width="match_parent"
+        android:layout_height="0sp"
+        android:fillViewport="true"
+        android:layout_marginBottom="5sp"
+        android:padding="18sp"
+        android:paddingBottom="0sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loTitle"
+        app:layout_constraintBottom_toTopOf="@+id/nav">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/loSection1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:id="@+id/loSection1Label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tvSection1"
+                        style="@style/styleLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/notifier_form_label"
+                        android:text="@string/Alert_Type" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <CheckBox
+                            android:id="@+id/cbNotification"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:button="@drawable/selector_toggle_alarm"
+                            android:text="CheckBox" />
+
+                        <CheckBox
+                            android:id="@+id/cbAlarm"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:button="@drawable/selector_toggle_notifcation"
+                            android:text="CheckBox" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/loSection2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@+id/loSection3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/loSection1">
+
+                <LinearLayout
+                    android:id="@+id/loSection2Label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="@id/loSection2"
+                    app:layout_constraintTop_toTopOf="@id/loSection2">
+
+                    <TextView
+                        android:id="@+id/tvSection2"
+                        style="@style/styleLabel"
+                        android:layout_marginTop="@dimen/notifier_form_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/notifier_form_label"
+                        android:text="@string/Details" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/loLocations"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="@id/loSection2"
+                    app:layout_constraintTop_toBottomOf="@id/loSection2Label">
+
+                    <androidx.fragment.app.FragmentContainerView
+                        android:id="@+id/fragmentLocationSearchBar"
+                        style="@style/styleEditText"
+                        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/et_padding_start"
+                        android:paddingEnd="@dimen/et_padding_end"
+                        android:textColorHint="@drawable/selector_edit_text" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnAddLocation"
+                    style="@style/styleRangeButtons"
+                    android:layout_width="50sp"
+                    android:layout_height="50sp"
+                    android:layout_marginEnd="10sp"
+                    android:background="@drawable/add_button"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/loLocations"/>
+
+                <EditText
+                    android:id="@+id/etName"
+                    style="@style/styleEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/notifier_form_et"
+                    android:hint="@string/Name"
+                    android:inputType="text"
+                    android:paddingStart="@dimen/et_padding_start"
+                    android:paddingTop="@dimen/et_padding_top"
+                    android:paddingBottom="@dimen/et_padding_bottom"
+                    android:textColorHint="@drawable/selector_edit_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btnAddLocation" />
+
+                <LinearLayout
+                    android:id="@+id/loRange"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/notifier_form_et"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/etName">
+
+                    <EditText
+                        android:id="@+id/etRange"
+                        style="@style/styleEditText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/Range"
+                        android:inputType="number"
+                        android:paddingStart="@dimen/et_padding_start"
+                        android:paddingTop="@dimen/et_padding_top"
+                        android:paddingBottom="@dimen/et_padding_bottom"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="25sp"
+                        android:textColorHint="@drawable/selector_edit_text" />
+
+                    <Button
+                        android:id="@+id/btnAddRange"
+                        style="@style/styleRangeButtons"
+                        android:background="@drawable/add_button"
+                        android:layout_width="50sp"
+                        android:layout_height="50sp"
+                        android:layout_marginEnd="10sp" />
+
+                    <Button
+                        android:id="@+id/btnMinusRange"
+                        style="@style/styleRangeButtons"
+                        android:background="@drawable/subtract_button"
+                        android:layout_width="50sp"
+                        android:layout_height="50sp" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/loSection3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/loSection2">
+
+                <LinearLayout
+                    android:id="@+id/loSection3Label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/notifier_form_label"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvSection3"
+                            style="@style/styleLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/notifier_form_label"
+                            android:layout_weight="1"
+                            android:text="@string/Set_Active" />
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/switchNotifierActive"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:thumb="@drawable/selector_toggle_thumb"
+                            app:track="@drawable/selector_toggle_track" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/loSection4"
+                android:layout_width="match_parent"
+                android:layout_height="0sp"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/loSection3">
+
+                <LinearLayout
+                    android:id="@+id/loSection4Label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvSection4"
+                            style="@style/styleLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/Schedule" />
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/switchSchedule"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:thumb="@drawable/selector_toggle_thumb"
+                            app:track="@drawable/selector_toggle_track" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/loDateTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/loSection4Label">
+
+                    <EditText
+                        android:id="@+id/etStartDate"
+                        style="@style/styleEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/notifier_form_et"
+                        android:focusable="false"
+                        android:hint="@string/Start_Date"
+                        android:inputType="text"
+                        android:paddingStart="@dimen/et_padding_start"
+                        android:paddingTop="@dimen/et_padding_top"
+                        android:paddingBottom="@dimen/et_padding_bottom"
+                        android:textColorHint="@drawable/selector_edit_text"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/etEndDate"
+                        style="@style/styleEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/notifier_form_et"
+                        android:focusable="false"
+                        android:hint="@string/End_Date"
+                        android:inputType="text"
+                        android:paddingStart="@dimen/et_padding_start"
+                        android:paddingTop="@dimen/et_padding_top"
+                        android:paddingBottom="@dimen/et_padding_bottom"
+                        android:textColorHint="@drawable/selector_edit_text"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/etStartDate" />
+
+                    <EditText
+                        android:id="@+id/etTime"
+                        style="@style/styleEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/notifier_form_et"
+                        android:focusable="false"
+                        android:hint="@string/Time"
+                        android:inputType="text"
+                        android:paddingStart="@dimen/et_padding_start"
+                        android:paddingTop="@dimen/et_padding_top"
+                        android:paddingBottom="@dimen/et_padding_bottom"
+                        android:textColorHint="@drawable/selector_edit_text"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/etEndDate" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/loBtns"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="20sp"
+                android:paddingEnd="20sp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/notifier_form_et"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/loSection4">
+
+                <Button
+                    android:id="@+id/btnSave"
+                    style="@style/styleButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10sp"
+                    android:text="Create" />
+
+                <Button
+                    android:id="@+id/btnReset"
+                    style="@style/styleButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cancel" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav">
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+</androidx.constraintlayout.widget.ConstraintLayout>

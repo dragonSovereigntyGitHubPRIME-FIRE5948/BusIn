@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "386506941173",
+    "project_id": "busin-2fcf8",
+    "storage_bucket": "busin-2fcf8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:386506941173:android:a15400b50be3d760ae1bbc",
+        "android_client_info": {
+          "package_name": "com.example.sgbusandlocationalarm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "386506941173-t28tq0kj2167r75fhc651co99gh5hk0p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sgbusandlocationalarm",
+            "certificate_hash": "19de0a733bb7af8ceb2b309b4c66c906511c71ee"
+          }
+        },
+        {
+          "client_id": "386506941173-1gjipua4urf8t0mlc0fbfv22i6lbl4lj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQOce3mZitaituQOyr37QbYJYmL_whwYc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "386506941173-1gjipua4urf8t0mlc0fbfv22i6lbl4lj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

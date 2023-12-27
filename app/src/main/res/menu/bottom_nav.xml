@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Home"
+        android:id="@+id/homeNav"
+        android:icon="@drawable/ic_home"
+        />
+
+    <item android:title="Arrival"
+        android:id="@+id/arrivalNav"
+        android:icon="@drawable/ic_bus"
+        />
+
+    <item android:id="@+id/placeholder"
+        android:title="" />
+
+
+    <item android:title="Geofence"
+        android:id="@+id/geofenceNav"
+        android:icon="@drawable/ic_geofence"
+        />
+
+</menu>

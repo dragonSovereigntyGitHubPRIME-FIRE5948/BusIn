@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20sp"
+    android:layout_marginEnd="15sp"
+    android:layout_marginStart="15sp"
+    app:cardBackgroundColor="@android:color/transparent"
+    app:cardElevation="0sp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_curve_rv_item"
+        android:paddingTop="13sp"
+        android:paddingBottom="13sp"
+        android:paddingStart="0sp"
+        android:paddingEnd="25sp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvAbbreviatedName"
+                android:theme="@style/styleNotifierCircleText"
+                android:layout_width="35sp"
+                android:layout_height="35sp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@drawable/bg_circle"
+                android:text="12" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvName"
+                style="@style/styleNotifierText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Notifier"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tvLocation"
+                style="@style/styleNotifierSubText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2sp"
+                android:text="dd"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchNotifierActive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:thumb="@drawable/selector_toggle_thumb"
+                app:track="@drawable/selector_toggle_track" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

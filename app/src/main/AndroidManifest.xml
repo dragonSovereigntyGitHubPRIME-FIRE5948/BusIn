@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- LOCATION -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!--
+ Required only when requesting background location access for Geofence or
+         constant use on Android 10 (API level 29) and higher.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- Define Google Play Services version -->
+    <meta-data
+        android:name="com.google.android.gms.version"
+        android:value="@integer/google_play_services_version" />
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.SGBusAndLocationAlarm"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="31">
+<!--        <activity-->
+<!--            android:name=".Notifier.NotifierFormActivity"-->
+<!--            android:exported="false" />-->
+        <activity
+            android:name=".Notifier.NotifiersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity3"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity2"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" /> <!-- Google Play Services -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" /> <!-- &lt;!&ndash; Recommended for Android 9 (API level 28) and lower. &ndash;&gt; -->
+        <!-- &lt;!&ndash; Required for Android 10 (API level 29) and higher. &ndash;&gt; -->
+        <!-- <service -->
+        <!-- android:name="MyNavigationService" -->
+        <!-- android:foregroundServiceType="location" ... > -->
+        <!-- &lt;!&ndash; Any inner elements would go here. &ndash;&gt; -->
+        <!-- </service> -->
+        <receiver
+            android:name=".Geofence.GeofenceBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity
+            android:name=".BusArrival.BusArrivalActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Geofence.NotifierMapsActivity"
+            android:exported="true"
+            android:label="@string/title_activity_maps" />
+        <activity
+            android:name=".Notifier.NotifierFormActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Edit Text -->
+    <dimen name="et_padding_start">47sp</dimen>
+    <dimen name="et_padding_end">20sp</dimen>
+    <dimen name="et_padding_top">13sp</dimen>
+    <dimen name="et_padding_bottom">13sp</dimen>
+
+    <!-- Notifier Form-->
+    <dimen name="notifier_form_label">20sp</dimen>
+    <dimen name="notifier_form_et">20sp</dimen>
+
+</resources>

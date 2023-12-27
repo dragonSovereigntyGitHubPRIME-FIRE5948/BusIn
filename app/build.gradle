@@ -1,0 +1,141 @@
+plugins {
+    id 'com.android.application'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+
+    namespace 'com.example.sgbusandlocationalarm'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.example.sgbusandlocationalarm"
+        minSdk 21
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled = true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // API Keys
+        buildConfigField "String", "MAPS_API_KEY", "\"" + getMapsApiKey() + "\""
+        buildConfigField "String", "LTA_DATAMALL_KEY", "\"" + getLtaDataMallApiKey() + "\""
+        buildConfigField "String", "MAPBOX_API_KEY_SECRET", "\"" + getMapBoxApiKeySecret() + "\""
+    }
+
+    buildTypes {
+        release {
+            // Enables code shrinking, obfuscation, and optimization for only
+            // your project's release build type.
+            minifyEnabled true
+            // Enables resource shrinking, which is performed by the
+            // Android Gradle plugin.
+            shrinkResources true
+            // Includes the default ProGuard rules files that are packaged with
+            // the Android Gradle plugin. To learn more, go to the section about
+            // R8 configuration files.
+            proguardFiles getDefaultProguardFile(
+                    'proguard-android-optimize.txt'),
+                    'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+        coreLibraryDesugaringEnabled true
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.navigation:navigation-fragment:2.7.2'
+    implementation 'androidx.navigation:navigation-ui:2.7.2'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+//    implementation "androidx.compose.material3:material3:1.1.1"
+//    implementation "androidx.compose.material3:material3-window-size-class:1.1.1"
+
+    coreLibraryDesugaring('com.android.tools:desugar_jdk_libs_nio:2.0.2')
+
+    // Splash Screen Compat Library
+    implementation 'androidx.core:core-splashscreen:1.0.0-beta02'
+
+    // Google Play Service
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
+    // Google Sign In SDK
+    implementation("com.google.android.gms:play-services-auth:20.5.0")
+    // Google Maps SDK
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    // Google Places SDK
+    implementation 'com.google.android.libraries.places:places:2.5.0'
+//    implementation 'com.google.maps.android:android-maps-utils:3.4.0'
+    // OkHTTP
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.11'
+    // Jackson
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.15.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.15.2'
+    // Firebase
+    // Firebase SDK
+    implementation(platform("com.google.firebase:firebase-bom:32.1.0"))
+//    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-firestore' // Firestore
+
+    // Google Sign In SDK
+    implementation("com.google.android.gms:play-services-auth:20.5.0")
+
+    // Firebase SDK
+    implementation(platform("com.google.firebase:firebase-bom:32.1.0"))
+    implementation 'com.google.firebase:firebase-firestore' // Firestore
+
+    // Firebase App Check
+//    implementation 'com.google.firebase:firebase-appcheck-playintegrity'
+
+    // Firebase UI Library
+    implementation 'com.firebaseui:firebase-ui-firestore:8.0.2' // Cloud Firestore
+    implementation 'com.firebaseui:firebase-ui-auth:8.0.2' // Auth
+//    implementation 'com.firebaseui:firebase-ui-storage:8.0.2' // Cloud Storage
+
+//    implementation "androidx.fragment:fragment:1.2.5"
+
+//    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.7'
+//    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
+
+    implementation ('com.mapbox.maps:android:10.16.0'){
+        exclude group: 'group_name', module: 'module_name'
+    }
+
+    implementation "com.mapbox.search:place-autocomplete:1.0.0-rc.6"
+    implementation "com.mapbox.search:mapbox-search-android-ui:1.0.0-rc.6"
+}
+
+    apply plugin: 'com.google.gms.google-services'
+
+// Function to get Google Maps API Key from local.properties
+def getMapsApiKey() {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    return properties.getProperty("MAPS_API_KEY");
+}
+
+def getLtaDataMallApiKey() {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    return properties.getProperty("LTA_DATAMALL_KEY");
+}
+
+def getMapBoxApiKeySecret() {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    return properties.getProperty("MAPBOX_API_KEY_SECRET");
+}
