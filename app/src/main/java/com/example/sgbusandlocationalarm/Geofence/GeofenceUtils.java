@@ -21,19 +21,19 @@ import java.util.ArrayList;
 public class GeofenceUtils {
 
     /** If user long clicks map, add Geofence */
-    @SuppressLint("MissingPermission")
-    public static void addGeofence(GeofencingClient geofencingClient, GeofenceHelper geofenceHelper,
-                                   ArrayList<LatLng> latLngArrayList) {
-
-
-        GeofencingRequest geofencingRequest = geofenceHelper.getGeofencingRequest(latLngArrayList);
-        PendingIntent pendingIntent = geofenceHelper.getPendingIntent();
-
+//    @SuppressLint("MissingPermission")
+//    public static void addGeofence(GeofencingClient geofencingClient, GeofenceHelper geofenceHelper,
+//                                   ArrayList<LatLng> latLngArrayList) {
+//
+//
+//        GeofencingRequest geofencingRequest = geofenceHelper.getGeofencingRequest(latLngArrayList);
+//        PendingIntent pendingIntent = geofenceHelper.getPendingIntent();
+//
 //        geofencingClient.addGeofences(geofencingRequest, pendingIntent)
 //                .addOnSuccessListener(new OnSuccessListener<Void>() {
 //                    @Override
 //                    public void onSuccess(Void aVoid) {
-//                        Toast.makeText(NotifierMapsActivity.this, "Geofence successfully add", Toast.LENGTH_SHORT).show();
+////                        Toast.makeText(, "Geofence successfully add", Toast.LENGTH_SHORT).show();
 //                        Log.d(TAG, "onSuccess: Geofence Added...");
 //                    }
 //                })
@@ -41,10 +41,10 @@ public class GeofenceUtils {
 //                    @Override
 //                    public void onFailure(@NonNull Exception e) {
 ////                        String errorMessage = geofenceHelper.getErrorString(e);
-//                        Toast.makeText(NotifierMapsActivity.this, "Unsuccessful", Toast.LENGTH_SHORT).show();
+////                        Toast.makeText(, "Unsuccessful", Toast.LENGTH_SHORT).show();
 //                        Log.d(TAG, "onFailure: ");
 //                    }
 //                });
-    }
+//    }
 
 }

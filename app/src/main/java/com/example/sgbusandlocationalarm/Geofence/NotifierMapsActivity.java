@@ -50,7 +50,7 @@ public class NotifierMapsActivity extends FragmentActivity implements OnMapReady
     private GeofenceHelper geofenceHelper;
 
 //    private LatLng geoCoordinates;
-    private LatLng geofence;
+    private static LatLng geofence;
     private ArrayList<LatLng> geoCoordinates;
 //    private LatLng geofence;
 
@@ -109,9 +109,9 @@ public class NotifierMapsActivity extends FragmentActivity implements OnMapReady
         // TODO NULL CHECK
         geoCoordinates = getIntent().getParcelableArrayListExtra("GeoCoordinates");
 
-//        for (int i =0; i<geoCoordinates.size(); i++) {
-//            geofence = new LatLng(geoCoordinates.get(i).latitude, geoCoordinates.get(i).longitude);
-//        }
+        for (int i =0; i<geoCoordinates.size(); i++) {
+            geofence = new LatLng(geoCoordinates.get(i).latitude, geoCoordinates.get(i).longitude);
+        }
 
         //TODO CHECK ARRAYLIST EMPTY, ETC
         geofence = geoCoordinates.get(0);
@@ -149,7 +149,7 @@ public class NotifierMapsActivity extends FragmentActivity implements OnMapReady
         //animate camera
         this.googleMap.moveCamera(CameraUpdateFactory.zoomTo(15));
 
-//        addGeofence(geofence2, GEOFENCE_RADIUS);
+        addGeofence(geofence, GEOFENCE_RADIUS);
 
         googleMap.setMyLocationEnabled(true);
 
@@ -191,33 +191,33 @@ public class NotifierMapsActivity extends FragmentActivity implements OnMapReady
         googleMap.clear();
         addMarker(latLng);
         addCircle(latLng, GEOFENCE_RADIUS);
-//        addGeofence(latLng, GEOFENCE_RADIUS);
+        addGeofence(latLng, GEOFENCE_RADIUS);
     }
 
 //    /** If user long clicks map, add Geofence */
-//    @SuppressLint("MissingPermission")
-//    private void addGeofence(LatLng latLng, float radius) {
-//        Geofence geofence = geofenceHelper.createGeofence(GEOFENCE_ID, latLng, radius, Geofence.GEOFENCE_TRANSITION_ENTER | Geofence.GEOFENCE_TRANSITION_DWELL | Geofence.GEOFENCE_TRANSITION_EXIT);
-//        GeofencingRequest geofencingRequest = geofenceHelper.getGeofencingRequest(geofence);
-//        PendingIntent pendingIntent = geofenceHelper.getPendingIntent();
-//
-//        geofencingClient.addGeofences(geofencingRequest, pendingIntent)
-//                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void aVoid) {
-//                        Toast.makeText(NotifierMapsActivity.this, "Geofence successfully add", Toast.LENGTH_SHORT).show();
-//                        Log.d(TAG, "onSuccess: Geofence Added...");
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-////                        String errorMessage = geofenceHelper.getErrorString(e);
-//                        Toast.makeText(NotifierMapsActivity.this, "Unsuccessful", Toast.LENGTH_SHORT).show();
-//                        Log.d(TAG, "onFailure: ");
-//                    }
-//                });
-//    }
+    @SuppressLint("MissingPermission")
+    private void addGeofence(LatLng latLng, float radius) {
+        Geofence geofence = geofenceHelper.createGeofence(GEOFENCE_ID, latLng, radius, Geofence.GEOFENCE_TRANSITION_ENTER | Geofence.GEOFENCE_TRANSITION_DWELL | Geofence.GEOFENCE_TRANSITION_EXIT);
+        GeofencingRequest geofencingRequest = geofenceHelper.getGeofencingRequest(geofence);
+        PendingIntent pendingIntent = geofenceHelper.getPendingIntent();
+
+        geofencingClient.addGeofences(geofencingRequest, pendingIntent)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(NotifierMapsActivity.this, "Geofence successfully add", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "onSuccess: Geofence Added...");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+//                        String errorMessage = geofenceHelper.getErrorString(e);
+                        Toast.makeText(NotifierMapsActivity.this, "Unsuccessful", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "onFailure: ");
+                    }
+                });
+    }
 
     /** Map UI Manipulation */
 

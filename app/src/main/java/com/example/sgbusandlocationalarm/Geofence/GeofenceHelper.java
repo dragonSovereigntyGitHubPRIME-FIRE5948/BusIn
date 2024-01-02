@@ -37,13 +37,16 @@ public class GeofenceHelper extends ContextWrapper {
         typical Wi-Fi networks, & also helps reduce device power consumption.
      */
 
-    public GeofencingRequest getGeofencingRequest(ArrayList<LatLng> latLngList) {
+    public GeofencingRequest getGeofencingRequests(ArrayList<LatLng> latLngList) {
 
         ArrayList<Geofence> geofenceList = new ArrayList<>();
 
         for(LatLng coordinates: latLngList) {
             geofenceList.add(createGeofence("d", coordinates, 500, 2));
         }
+
+
+
 
         GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
 
@@ -54,6 +57,21 @@ public class GeofenceHelper extends ContextWrapper {
 
         // Add the geofences to be monitored by geofencing service using the list we created.
         builder.addGeofences(geofenceList);
+
+        return builder.build();
+    }
+
+    public GeofencingRequest getGeofencingRequest(Geofence geofence) {
+
+        GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
+
+        // The INITIAL_TRIGGER_ENTER flag indicates that geofencing service should trigger a
+        // GEOFENCE_TRANSITION_ENTER notification when the geofence is added and if the device
+        // is already inside that geofence.
+        builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
+
+        // Add the geofences to be monitored by geofencing service using the list we created.
+        builder.addGeofence(geofence);
 
         return builder.build();
     }
