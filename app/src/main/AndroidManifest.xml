@@ -62,7 +62,8 @@
         <receiver
             android:name=".Geofence.GeofenceBroadcastReceiver"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="false">
+        </receiver>
 
         <activity
             android:name=".BusArrival.BusArrivalActivity"

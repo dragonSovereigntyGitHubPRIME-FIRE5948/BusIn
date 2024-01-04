@@ -13,9 +13,6 @@ import android.widget.Toast;
 import androidx.appcompat.widget.SwitchCompat;
 
 import com.example.sgbusandlocationalarm.BuildConfig;
-import com.example.sgbusandlocationalarm.Geofence.NotifierMapsActivity;
-import com.example.sgbusandlocationalarm.MyLatLng;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.text.SimpleDateFormat;
@@ -29,19 +26,24 @@ import java.util.Date;
 public class Utils {
 
     /** */
-    public static void startActivity(Activity activity, Class activityToStart) {
+    public static void intentStartActivity(Activity activity, Class activityToStart) {
         Intent intent = new Intent(activity, activityToStart);
         activity.startActivity(intent);
         activity.finish();
     }
 
     /** */
-    public static void startActivityPutLatLng(Activity activity, Class activityToStart, ArrayList<MyLatLng> geoCoordinates) {
-        Intent intent = new Intent(activity, activityToStart);
-        intent.putParcelableArrayListExtra("GeoCoordinates", geoCoordinates);
-        activity.startActivity(intent);
-        activity.finish();
+    public static void intentPutExtra(Intent intent, String extraName, ArrayList<?> arrayList) {
+        intent.putExtra(extraName, arrayList);
     }
+
+    /** */
+//    public static void startActivityPutLatLng(Activity activity, Class activityToStart, String extraName, ArrayList<MyLatLng> coordinates) {
+//        Intent intent = new Intent(activity, activityToStart);
+//        intent.putParcelableArrayListExtra("CoordinatesFromNotifierForm", coordinates);
+//        activity.startActivity(intent);
+//        activity.finish();
+//    }
 
     /** */
 

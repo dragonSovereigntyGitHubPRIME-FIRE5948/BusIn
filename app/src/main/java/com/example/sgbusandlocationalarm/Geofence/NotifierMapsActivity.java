@@ -13,7 +13,6 @@ import android.app.PendingIntent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.widget.Toast;
 import com.example.sgbusandlocationalarm.NavListeners;
@@ -30,46 +29,37 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
 
 public class NotifierMapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapLongClickListener {
 
-    // Views
+    // Variables
+    // views
     private ActivityNotifierMapsBinding binding;
-
-    // Maps
+    // maps
     private GoogleMap googleMap;
-
-    // Geofence
+    // intent
+    private ArrayList<String> arrayListCoordinateNames;
+    private ArrayList<LatLng> arrayListCoordinates;
+    // geofence
     private GeofencingClient geofencingClient;
     private GeofenceHelper geofenceHelper;
+    // constants
+    private final float GEOFENCE_RADIUS = 150;
+    private final int FINE_LOCATION_ACCESS_REQUEST_CODE = 10001;
+    private final int BACKGROUND_LOCATION_ACCESS_REQUEST_CODE = 10002;
+    public static final String ACCESS_COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
+    public static final String ACCESS_FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
 
-//    private LatLng geoCoordinates;
-    private static LatLng geofence;
-    private ArrayList<LatLng> geoCoordinates;
-//    private LatLng geofence;
-
-    // For best results, the minimum radius of the geofence should be set between 100 - 150 meters.
-    private float GEOFENCE_RADIUS = 150;
-    // todo make random
-    private String GEOFENCE_ID = "gf-10293";
-    private int FINE_LOCATION_ACCESS_REQUEST_CODE = 10001;
-    private int BACKGROUND_LOCATION_ACCESS_REQUEST_CODE = 10002;
-
-    public static final String permissionCoarseLocation = Manifest.permission.ACCESS_COARSE_LOCATION;
-    public static final String permissionFineLocation = Manifest.permission.ACCESS_FINE_LOCATION;
-    public static final String permissionBackgroundLocation = Manifest.permission.ACCESS_BACKGROUND_LOCATION;
-    public static final String permissionNoti = Manifest.permission.POST_NOTIFICATIONS;
+//    TODO CHECK PERMISSIONS
+    public static final String ACCESS_BACKGROUND_LOCATION = Manifest.permission.ACCESS_BACKGROUND_LOCATION;
+    public static final String POST_NOTIFICATIONS = Manifest.permission.POST_NOTIFICATIONS;
 
     private static final String[] permissions =
             new String[] {
-                    permissionCoarseLocation,
-                    permissionFineLocation,
+                    ACCESS_COARSE_LOCATION,
+                    ACCESS_FINE_LOCATION,
 //                    permissionBackgroundLocation,
 //                    permissionNoti
             };
@@ -80,76 +70,49 @@ public class NotifierMapsActivity extends FragmentActivity implements OnMapReady
         binding = ActivityNotifierMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        NavListeners.navListener(binding.nav, this);
+        // initialisations.
+        geofencingClient = LocationServices.getGeofencingClient(this);
+        geofenceHelper = new GeofenceHelper(this);
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        // get data from Intent.
+        arrayListCoordinates = getIntentCoordinates();
+        arrayListCoordinateNames = getIntentNames();
+
+        // obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(binding.map.getId());
         mapFragment.getMapAsync(this);
 
-
+        //TODO CHANGE
+        NavListeners.navListener(binding.nav, this);
         this.requestPermissions(permissions, 555);
-
-
-        geofencingClient = LocationServices.getGeofencingClient(this);
-        geofenceHelper = new GeofenceHelper(this);
     }
 
-    /**
-        Manipulates the map once available. This callback is triggered when the map is ready to be used.
-     */
+    /** Manipulates the map once available. This callback is triggered when the map is ready to be used. */
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        googleMap.setOnMapLongClickListener(this);
+        //TODO LONG CLICK
+        //googleMap.setOnMapLongClickListener(this);
 
+        // reference
         this.googleMap = googleMap;
 
-        // gets geo coordinates form intent, create new LatLng object with coordinates
-
-        // TODO NULL CHECK
-        geoCoordinates = getIntent().getParcelableArrayListExtra("GeoCoordinates");
-
-        for (int i =0; i<geoCoordinates.size(); i++) {
-            geofence = new LatLng(geoCoordinates.get(i).latitude, geoCoordinates.get(i).longitude);
+        // set up visualisation for Geofences.
+        for (int i = 0; i< arrayListCoordinates.size(); i++) {
+            // add marker of coordinates.
+            this.googleMap.addMarker(new MarkerOptions()
+                    .position(arrayListCoordinates.get(i))
+                    .title(arrayListCoordinateNames.get(i))
+            );
+            // add circle of Geofence.
+            addCircle(arrayListCoordinates.get(i), GEOFENCE_RADIUS);
+            // add Geofence.
+            addGeofencesForTracking();
         }
 
-        //TODO CHECK ARRAYLIST EMPTY, ETC
-        geofence = geoCoordinates.get(0);
-
-        LatLng geofence2 = new LatLng(1.4293, 103.8352);
-
-        this.googleMap.addMarker(new MarkerOptions().position(geofence2));
-        this.googleMap.addMarker(new MarkerOptions().position(new LatLng(1.4256, 103.8350)));
-        this.googleMap.addMarker(new MarkerOptions().position(new LatLng(1.4197, 103.8343)));
-        this.googleMap.addMarker(new MarkerOptions().position(new LatLng(1.4163, 103.8326)));
-        this.googleMap.addMarker(new MarkerOptions().position(new LatLng(1.4128, 103.8308)));
-
-        // Add polylines to the map.
-        // Polylines are useful to show a route or some other connection between points.
-        Polyline polyline1 = googleMap.addPolyline(new PolylineOptions()
-                .clickable(true)
-                .add(
-                        geofence2,
-                        new LatLng(1.4256, 103.8350),
-                        new LatLng(1.4197, 103.8343),
-                        new LatLng(1.4163, 103.8326),
-                        new LatLng(1.4128, 103.8308)
-                ));
-
-        // Adds markers with coordinates.
-        this.googleMap.addMarker(new MarkerOptions()
-                .position(geofence)
-                .title("Geofence")
-        );
-        // Adds circle of Geofence.
-        addCircle(geofence, GEOFENCE_RADIUS);
-
-        // Move camera & zoom
-        this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(geofence, 15.0f));
-        //animate camera
+        // move camera & zoom to first coordinate
+        this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(arrayListCoordinates.get(0), 15.0f));
         this.googleMap.moveCamera(CameraUpdateFactory.zoomTo(15));
-
-        addGeofence(geofence, GEOFENCE_RADIUS);
 
         googleMap.setMyLocationEnabled(true);
 
@@ -166,62 +129,78 @@ public class NotifierMapsActivity extends FragmentActivity implements OnMapReady
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
 //            enableUserLocation();
 //        }
+
+//        this.googleMap.addMarker(new MarkerOptions().position(geofence2));
+//        this.googleMap.addMarker(new MarkerOptions().position(new LatLng(1.4256, 103.8350)));
+//        this.googleMap.addMarker(new MarkerOptions().position(new LatLng(1.4197, 103.8343)));
+//        this.googleMap.addMarker(new MarkerOptions().position(new LatLng(1.4163, 103.8326)));
+//        this.googleMap.addMarker(new MarkerOptions().position(new LatLng(1.4128, 103.8308)));
+//
+//        // Add polylines to the map.
+//        // Polylines are useful to show a route or some other connection between points.
+//        Polyline polyline1 = googleMap.addPolyline(new PolylineOptions()
+//                .clickable(true)
+//                .add(
+//                        geofence2,
+//                        new LatLng(1.4256, 103.8350),
+//                        new LatLng(1.4197, 103.8343),
+//                        new LatLng(1.4163, 103.8326),
+//                        new LatLng(1.4128, 103.8308)
+//                ));
     }
 
-    @Override
-    public void onMapLongClick(LatLng latLng) {
-        if (Build.VERSION.SDK_INT >= 29) {
-            //We need background permission
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                handleMapLongClick(latLng);
-            } else {
-                if (this.shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {
-                    //We show a dialog and ask for permission
-                    ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_BACKGROUND_LOCATION}, BACKGROUND_LOCATION_ACCESS_REQUEST_CODE);
-                } else {
-                    ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_BACKGROUND_LOCATION}, BACKGROUND_LOCATION_ACCESS_REQUEST_CODE);
-                }
-            }
-        } else {
-            handleMapLongClick(latLng);
-        }
-    }
+//    @Override
+//    public void onMapLongClick(LatLng latLng) {
+//        if (Build.VERSION.SDK_INT >= 29) {
+//            //We need background permission
+//            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+//                handleMapLongClick(latLng);
+//            } else {
+//                if (this.shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {
+//                    //We show a dialog and ask for permission
+//                    ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_BACKGROUND_LOCATION}, BACKGROUND_LOCATION_ACCESS_REQUEST_CODE);
+//                } else {
+//                    ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_BACKGROUND_LOCATION}, BACKGROUND_LOCATION_ACCESS_REQUEST_CODE);
+//                }
+//            }
+//        } else {
+//            handleMapLongClick(latLng);
+//        }
+//    }
 
-    private void handleMapLongClick(LatLng latLng) {
-        googleMap.clear();
-        addMarker(latLng);
-        addCircle(latLng, GEOFENCE_RADIUS);
-        addGeofence(latLng, GEOFENCE_RADIUS);
-    }
+//    private void handleMapLongClick(LatLng latLng) {
+//        googleMap.clear();
+//        addMarker(latLng);
+//        addCircle(latLng, GEOFENCE_RADIUS);
+////        addGeofence();
+//    }
 
-//    /** If user long clicks map, add Geofence */
+    // TODO BRING GEOFENCE TO NOTIFIER FORM ACTIVITY
+    /** Add Geofences for tracking */
     @SuppressLint("MissingPermission")
-    private void addGeofence(LatLng latLng, float radius) {
-        Geofence geofence = geofenceHelper.createGeofence(GEOFENCE_ID, latLng, radius, Geofence.GEOFENCE_TRANSITION_ENTER | Geofence.GEOFENCE_TRANSITION_DWELL | Geofence.GEOFENCE_TRANSITION_EXIT);
-        GeofencingRequest geofencingRequest = geofenceHelper.getGeofencingRequest(geofence);
-        PendingIntent pendingIntent = geofenceHelper.getPendingIntent();
+    private void addGeofencesForTracking() {
+        // create Geofences with coordinates from NotifierForm Intent.
+        ArrayList<Geofence> arrayListGeofences = geofenceHelper.createGeofences(arrayListCoordinates);
+        // GeofencingRequest settings.
+        GeofencingRequest geofencingRequest = geofenceHelper.getGeofencingRequest(arrayListGeofences);
+        // PendingIntent for BroadcastReceiver.
+        PendingIntent pendingIntent = geofenceHelper.getGeofencePendingIntent();
 
+        // FINAL: add Geofences for tracking.
+        // handle success and failure.
         geofencingClient.addGeofences(geofencingRequest, pendingIntent)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(NotifierMapsActivity.this, "Geofence successfully add", Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "onSuccess: Geofence Added...");
-                    }
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(NotifierMapsActivity.this, "Geofence successfully add", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "onSuccess: Geofence Added...");
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-//                        String errorMessage = geofenceHelper.getErrorString(e);
-                        Toast.makeText(NotifierMapsActivity.this, "Unsuccessful", Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, "onFailure: ");
-                    }
+                .addOnFailureListener(e -> {
+                    //String errorMessage = geofenceHelper.getErrorString(e);
+                    Toast.makeText(NotifierMapsActivity.this, "Unsuccessful", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "onFailure: ");
                 });
     }
 
     /** Map UI Manipulation */
-
-    //TODO CREATE HELPER CLASS
 
     /** Adds marker based on geo coordinates */
     private void addMarker(LatLng latLng) {
@@ -275,5 +254,27 @@ public class NotifierMapsActivity extends FragmentActivity implements OnMapReady
             }
         }
     }
+
+    private ArrayList<String> getIntentNames() {
+        ArrayList<String> arrayListNames = getIntent().getStringArrayListExtra("NamesFromNotifierForm");
+        // checks if ArrayList is empty.
+        // checks if ArrayList contains null values.
+        if (arrayListNames.isEmpty() || arrayListNames.contains(null)) {
+            finish();
+        }
+        return arrayListNames;
+    }
+
+    private ArrayList<LatLng> getIntentCoordinates() {
+        ArrayList<LatLng> arrayListGeoCoordinates = getIntent().getParcelableArrayListExtra("CoordinatesFromNotifierForm");
+        // checks if ArrayList is empty.
+        // checks if ArrayList contains null values.
+        if (arrayListGeoCoordinates.isEmpty() || arrayListGeoCoordinates.contains(null)) {
+            finish();
+        }
+        return arrayListGeoCoordinates;
+    }
+
+
 
 }

@@ -2,6 +2,7 @@ package com.example.sgbusandlocationalarm.Notifier;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.sgbusandlocationalarm.Constants;
@@ -58,9 +59,12 @@ public class NotifierFormActivity extends AppCompatActivity {
     private NotifierManager notifierManager = NotifierManager.getInstance();
     private AutocompleteSupportFragment autocompleteFragment;
     private HashMap<String, MyLatLng> locationHashMap;
-    private ArrayList<String> locationNamesArray = new ArrayList<>();
-    private ArrayList<MyLatLng> locationCoordinatesArray = new ArrayList<>();
     private int counter = 0;
+
+
+    // Intent
+    private ArrayList<String> arrayListForIntentNames = new ArrayList<>();
+    private ArrayList<MyLatLng> arrayListForIntentLatLng = new ArrayList<>();
 
     // LIFECYCLE //
     @Override
@@ -127,11 +131,11 @@ public class NotifierFormActivity extends AppCompatActivity {
 
             if (!locationHashMap.isEmpty() && !searchInput.getText().toString().equals("")) {
                 Map.Entry<String, MyLatLng> entry = locationHashMap.entrySet().iterator().next();
-                locationNamesArray.add(entry.getKey());
-                locationCoordinatesArray.add(entry.getValue());
-                binding.tvNumberOfLocations.setText(locationNamesArray.size()+"");
+                arrayListForIntentNames.add(entry.getKey());
+                arrayListForIntentLatLng.add(entry.getValue());
+                binding.tvNumberOfLocations.setText(arrayListForIntentNames.size()+"");
                 GoogleUtils.clear(this,autocompleteFragment);
-                Toast.makeText(this.getApplicationContext(), locationNamesArray.get(locationHashMap.size()-1)+" Added" ,Toast.LENGTH_SHORT).show();
+                Toast.makeText(this.getApplicationContext(), arrayListForIntentNames.get(locationHashMap.size()-1)+" Added" ,Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this.getApplicationContext(), "Please choose a location" ,Toast.LENGTH_SHORT).show();
             }
@@ -196,7 +200,11 @@ public class NotifierFormActivity extends AppCompatActivity {
                 // Save it to Firebase.
                 notifierManager.createNotifier(notifier);
                 // Start activity.
-                Utils.startActivityPutLatLng(this, NotifierMapsActivity.class, locationCoordinatesArray);
+                Intent intent = new Intent(this, NotifierMapsActivity.class);
+                intent.putStringArrayListExtra("NamesFromNotifierForm", arrayListForIntentNames);
+                intent.putParcelableArrayListExtra("CoordinatesFromNotifierForm", arrayListForIntentLatLng);
+                startActivity(intent);
+                finish();
             } else {
                 //TODO CREATE DIALOG
             }
@@ -224,7 +232,7 @@ public class NotifierFormActivity extends AppCompatActivity {
         // Location Name.
 
         // Location Coordinates.
-        if (locationNamesArray.isEmpty() || locationCoordinatesArray.isEmpty()) {
+        if (arrayListForIntentNames.isEmpty() || arrayListForIntentLatLng.isEmpty()) {
             Toast.makeText(this.getApplicationContext(), "Please enter a location." ,Toast.LENGTH_SHORT).show();
         }
 
@@ -233,16 +241,16 @@ public class NotifierFormActivity extends AppCompatActivity {
         if (name != null &&
                 range != null &&
                 alertType != null &&
-                !locationNamesArray.isEmpty() &&
-                !locationCoordinatesArray.isEmpty()) {
+                !arrayListForIntentNames.isEmpty() &&
+                !arrayListForIntentLatLng.isEmpty()) {
             //TODO ADD MORE
 
             if (!binding.switchSchedule.isChecked()) {
                 notifier = new NotifierModel(
                         name,
                         "Single",
-                        locationCoordinatesArray,
-                        locationNamesArray,
+                        arrayListForIntentLatLng,
+                        arrayListForIntentNames,
                         range,
                         alertType,
                         isActive);
@@ -275,8 +283,8 @@ public class NotifierFormActivity extends AppCompatActivity {
                 notifier = new NotifierModel(
                         name,
                         "Single",
-                        locationCoordinatesArray,
-                        locationNamesArray,
+                        arrayListForIntentLatLng,
+                        arrayListForIntentNames,
                         range,
                         alertType,
                         isActive,sdate, edate);
