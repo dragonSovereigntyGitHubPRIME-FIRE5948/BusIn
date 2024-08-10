@@ -2,17 +2,18 @@
 <resources>
 
     <color name="primary">#FF6200</color>
-    <color name="secondary">#25272C</color>
-    <color name="background">#FFFFFF</color>
-    <color name="surface">#EFEFEF</color>
+    <color name="secondary">#3700B3</color>
+    <color name="background">#E6E6E6</color>
+
+    <color name="secondary_light">#947DC7</color>
+    <color name="on_background_grey">#9C9C9C</color>
 
     <color name="on_primary">#EFEFEF</color>
     <color name="on_secondary">#EFEFEF</color>
-    <color name="on_background">#25272C</color>
-    <color name="on_surface">#25272C</color>
+    <color name="on_background">#FF181919</color>
 
-    <color name="hint">#80333333</color>
-
+    <color name="border">#CCCCCC</color>
+    <color name="hint">#CCCCCC</color>
 
 
     <color name="black">#FF000000</color>
@@ -22,23 +23,6 @@
     <color name="yellow">#DDD044</color>
     <color name="red2">#F40000</color>
 
-    <color name="dark_green">#0C5708</color>
-    <color name="light_green">#94C458</color>
-    <color name="white1">#EFEFEF</color>
-
-    <color name="white">#FFFFFFFF</color>
-
-    <color name="black1">#2B2B2B</color>
     <color name="transparent_black">#1A000000</color>
     <color name="transparent">#00000000</color>
-
-    <color name="primaryText">#FF0737</color>
-    <color name="navy">#0A0A2C</color>
-    <!--    primayrlightdark-->
-<!--    accent-->
-<!--    primary text, secondary-->
-
-    <color name="g1">#ff003f</color>
-    <color name="g2">#ef4c49</color>
-    <color name="g3">#ff6f43</color>
 </resources>

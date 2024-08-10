@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- LOCATION -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <!--
  Required only when requesting background location access for Geofence or
          constant use on Android 10 (API level 29) and higher.
@@ -30,26 +31,28 @@
         android:theme="@style/Theme.SGBusAndLocationAlarm"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-<!--        <activity-->
-<!--            android:name=".Notifier.NotifierFormActivity"-->
-<!--            android:exported="false" />-->
         <activity
-            android:name=".Notifier.NotifiersActivity"
+            android:name=".BusArrival.BusArrivalFragment"
             android:exported="false" />
         <activity
-            android:name=".MainActivity3"
+            android:name=".AccountManagement.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity2"
+            android:name=".Notifier.NotifierFormActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".Notifier.GeofenceFormActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Notifier.AllNotifiersFragment"
+            android:exported="false" />
+        <activity
+            android:name=".AccountManagement.SignInActivity"
             android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" /> <!-- Google Play Services -->
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" /> <!-- &lt;!&ndash; Recommended for Android 9 (API level 28) and lower. &ndash;&gt; -->
@@ -62,21 +65,21 @@
         <receiver
             android:name=".Geofence.GeofenceBroadcastReceiver"
             android:enabled="true"
-            android:exported="false">
-        </receiver>
+            android:exported="false" />
 
         <activity
-            android:name=".BusArrival.BusArrivalActivity"
+            android:name=".Onboard.OnboardActivity"
             android:exported="false" />
         <activity
             android:name=".Geofence.NotifierMapsActivity"
             android:exported="true"
             android:label="@string/title_activity_maps" />
         <activity
-            android:name=".Notifier.NotifierFormActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

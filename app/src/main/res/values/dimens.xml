@@ -1,3 +1,41 @@
 <resources>
+<!--  display headline title body label  -->
+    <dimen name="body_large">23sp</dimen>
+    <dimen name="body">14sp</dimen>
+
+    <dimen name="label">12sp</dimen>
+    <dimen name="label_small">7sp</dimen>
+
+    <dimen name="border_thickness_thin">1sp</dimen>
+    <dimen name="border_thickness">1.5sp</dimen>
+    <dimen name="radius">7sp</dimen>
+
+    <dimen name="app_padding_horizontal">15sp</dimen>
+
+<!--  Action Bar  -->
+    <dimen name="action_bar_padding_horizontal">15sp</dimen>
+    <dimen name="action_bar_padding_vertical">20sp</dimen>
+    <dimen name="action_bar_radius">30sp</dimen>
+
+    <dimen name="edit_text_padding_horizontal">8sp</dimen>
+    <dimen name="edit_text_padding_vertical">8sp</dimen>
+
+<!--  Tab Layout  -->
+    <dimen name="tab_item_padding_horizontal">20sp</dimen>
+    <dimen name="tab_item_padding_vertical">6sp</dimen>
+
+
+
+    <dimen name="gap">15sp</dimen>
+
+<!-- Bus stop card   -->
+    <dimen name="bus_stop_card_gap">15sp</dimen>
+    <dimen name="bus_stop_card_padding_vertical">15sp</dimen>
+    <dimen name="bus_stop_card_padding_horizontal">20sp</dimen>
+    <dimen name="bus_stop_icon">18sp</dimen>
+
+    <dimen name="bus_arrival_card_gap">5sp</dimen>
+
+
     <dimen name="fab_margin">16dp</dimen>
 </resources>

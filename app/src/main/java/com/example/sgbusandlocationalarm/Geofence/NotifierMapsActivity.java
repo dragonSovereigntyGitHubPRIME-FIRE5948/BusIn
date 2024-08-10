@@ -149,31 +149,31 @@ public class NotifierMapsActivity extends FragmentActivity implements OnMapReady
 //                ));
     }
 
-//    @Override
-//    public void onMapLongClick(LatLng latLng) {
-//        if (Build.VERSION.SDK_INT >= 29) {
-//            //We need background permission
-//            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-//                handleMapLongClick(latLng);
-//            } else {
-//                if (this.shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {
-//                    //We show a dialog and ask for permission
-//                    ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_BACKGROUND_LOCATION}, BACKGROUND_LOCATION_ACCESS_REQUEST_CODE);
-//                } else {
-//                    ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_BACKGROUND_LOCATION}, BACKGROUND_LOCATION_ACCESS_REQUEST_CODE);
-//                }
-//            }
-//        } else {
-//            handleMapLongClick(latLng);
-//        }
-//    }
+    @Override
+    public void onMapLongClick(LatLng latLng) {
+        if (Build.VERSION.SDK_INT >= 29) {
+            //We need background permission
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                handleMapLongClick(latLng);
+            } else {
+                if (this.shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {
+                    //We show a dialog and ask for permission
+                    ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_BACKGROUND_LOCATION}, BACKGROUND_LOCATION_ACCESS_REQUEST_CODE);
+                } else {
+                    ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_BACKGROUND_LOCATION}, BACKGROUND_LOCATION_ACCESS_REQUEST_CODE);
+                }
+            }
+        } else {
+            handleMapLongClick(latLng);
+        }
+    }
 
-//    private void handleMapLongClick(LatLng latLng) {
-//        googleMap.clear();
-//        addMarker(latLng);
-//        addCircle(latLng, GEOFENCE_RADIUS);
-////        addGeofence();
-//    }
+    private void handleMapLongClick(LatLng latLng) {
+        googleMap.clear();
+        addMarker(latLng);
+        addCircle(latLng, GEOFENCE_RADIUS);
+//        addGeofence();
+    }
 
     // TODO BRING GEOFENCE TO NOTIFIER FORM ACTIVITY
     /** Add Geofences for tracking */
@@ -213,9 +213,9 @@ public class NotifierMapsActivity extends FragmentActivity implements OnMapReady
         CircleOptions circleOptions = new CircleOptions();
         circleOptions.center(latLng);
         circleOptions.radius(radius);
-        circleOptions.strokeColor(R.color.navy);
+//        circleOptions.strokeColor(R.color.navy);
         //todo change transparency
-        circleOptions.fillColor(R.color.g1);
+//        circleOptions.fillColor(R.color.g1);
         circleOptions.strokeWidth(5);
         googleMap.addCircle(circleOptions);
     }

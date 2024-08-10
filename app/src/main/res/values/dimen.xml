@@ -1,14 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+<!--  TODO transfer  -->
+    <!--  Text  -->
+
+    <dimen name="font_size_title">20sp</dimen>
+    <dimen name="font_size_subtitle">16sp</dimen>
+    <dimen name="font_size_body">14sp</dimen>
+    <dimen name="font_size_button">14sp</dimen>
+
+<!--    Button-->
+    <dimen name="btn_padding">10sp</dimen>
+
     <!-- Edit Text -->
+    <dimen name="et_label_margin_start">16sp</dimen>
+
     <dimen name="et_padding_start">47sp</dimen>
     <dimen name="et_padding_end">20sp</dimen>
-    <dimen name="et_padding_top">13sp</dimen>
-    <dimen name="et_padding_bottom">13sp</dimen>
+    <dimen name="et_padding_top">10sp</dimen>
+    <dimen name="et_padding_bottom">10sp</dimen>
 
-    <!-- Notifier Form-->
+    <!-- Geofence Form-->
     <dimen name="notifier_form_label">20sp</dimen>
     <dimen name="notifier_form_et">20sp</dimen>
+
+
+
+    <dimen name="geofenceform_view_margin_top">15sp</dimen>
 
 </resources>

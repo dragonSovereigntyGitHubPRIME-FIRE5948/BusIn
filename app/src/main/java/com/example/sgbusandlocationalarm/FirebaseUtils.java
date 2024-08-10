@@ -12,15 +12,14 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.sgbusandlocationalarm.Accounts.AccountsManager;
+import com.example.sgbusandlocationalarm.AccountManagement.AccountsManager;
+import com.example.sgbusandlocationalarm.BusArrival.BusArrivalFragment;
 import com.firebase.ui.auth.AuthMethodPickerLayout;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
 import com.firebase.ui.auth.IdpResponse;
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,18 +34,18 @@ public class FirebaseUtils {
                 // google
                 new AuthUI.IdpConfig.GoogleBuilder().build(),
                 // email
-                new AuthUI.IdpConfig.EmailBuilder().build(),
-                // anonymous
-                new AuthUI.IdpConfig.AnonymousBuilder().build());
+                new AuthUI.IdpConfig.EmailBuilder().build()
+//                // anonymous
+//                new AuthUI.IdpConfig.AnonymousBuilder().build()
+                );
 
         // 1. FIREBASE AUTH UI //
 
         // Custom UI
         public static AuthMethodPickerLayout customLayout = new AuthMethodPickerLayout
-                .Builder(R.layout.layout_sign_in)
+                .Builder(R.layout.activity_sign_in)
                 .setGoogleButtonId(R.id.btnGoogle)
-                .setEmailButtonId(R.id.btnEmail)
-                .setAnonymousButtonId(R.id.btnAnonymous)
+                .setEmailButtonId(R.id.btn)
                 //TODO
                 // .setTosAndPrivacyPolicyId(R.id.baz)
                 .build();
@@ -62,8 +61,8 @@ public class FirebaseUtils {
                     // Keep Smart Lock's "hints" but disable the saving/retrieving of credentials
                     //.setIsSmartLockEnabled(false, true)
                     .setIsSmartLockEnabled(false)
-                    .setLogo(R.drawable.ic_launcher_background)
-                    .setTheme(R.style.SignInTheme)
+//                    .setLogo(R.drawable.ic_launcher_background)
+                    .setTheme(R.style.AppThemeFirebaseAuth)
                     .setAuthMethodPickerLayout(customLayout)
 //                .setTosAndPrivacyPolicyUrls(
 //                        "https://example.com/terms.html",
@@ -118,11 +117,11 @@ public class FirebaseUtils {
         }
 
         /** Get login result and handle responses */
-        private static void onLoginInResult(FirebaseAuthUIAuthenticationResult result, Activity activity) {
+        public static void onLoginInResult(FirebaseAuthUIAuthenticationResult result, Activity activity) {
             IdpResponse response = result.getIdpResponse();
             // 1. Logged in
             if (result.getResultCode() == RESULT_OK) {
-                activity.startActivity(new Intent(activity, MainActivity.class));
+                activity.startActivity(new Intent(activity, BusArrivalFragment.class));
                 accountsManager.saveAccountToFirestore();
                 activity.finish();
                 // Show 'welcome' dialog if it is new user

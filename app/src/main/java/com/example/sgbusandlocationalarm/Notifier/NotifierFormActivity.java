@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.sgbusandlocationalarm.Constants;
-import com.example.sgbusandlocationalarm.MyLatLng;
 import com.example.sgbusandlocationalarm.NavListeners;
 import com.example.sgbusandlocationalarm.R;
 
@@ -22,6 +21,7 @@ import com.example.sgbusandlocationalarm.Utils.PermissionUtils;
 import com.example.sgbusandlocationalarm.Utils.PlayServicesUtils;
 import com.example.sgbusandlocationalarm.Utils.Utils;
 import com.example.sgbusandlocationalarm.databinding.ActivityNotifierFormBinding;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -35,9 +35,9 @@ import java.util.Map;
 
 public class NotifierFormActivity extends AppCompatActivity {
 
-    //TODO CHECK DUPLICATE LOCATIONS
-
-    // VARIABLES //
+//    //TODO CHECK DUPLICATE LOCATIONS
+//
+//    // VARIABLES //
     private ActivityNotifierFormBinding binding;
 
     private final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
@@ -53,18 +53,16 @@ public class NotifierFormActivity extends AppCompatActivity {
                     permissionCoarseLocation,
                     permissionFineLocation,
 //                    permissionBackgroundLocation,
-//                    permissionNoti
             };
 
     private NotifierManager notifierManager = NotifierManager.getInstance();
     private AutocompleteSupportFragment autocompleteFragment;
-    private HashMap<String, MyLatLng> locationHashMap;
-    private int counter = 0;
+    private HashMap<String, com.google.android.gms.maps.model.LatLng> locationHashMap;
 
 
     // Intent
     private ArrayList<String> arrayListForIntentNames = new ArrayList<>();
-    private ArrayList<MyLatLng> arrayListForIntentLatLng = new ArrayList<>();
+    private ArrayList<LatLng> arrayListForIntentLatLng = new ArrayList<>();
 
     // LIFECYCLE //
     @Override
@@ -88,16 +86,15 @@ public class NotifierFormActivity extends AppCompatActivity {
 
         // Get AutoComplete fragment.
         autocompleteFragment = (AutocompleteSupportFragment)
-                getSupportFragmentManager().findFragmentById(R.id.fragmentLocationSearchBar);
+                    getSupportFragmentManager().findFragmentById(R.id.fragmentLocationSearchBar);
         // Configure AutoComplete.
         GoogleUtils.configureAutoCompleteFragment(autocompleteFragment);
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        GoogleUtils.configureAutoCompleteText(this, autocompleteFragment);
+        GoogleUtils.configureAutoCompleteUI(this, autocompleteFragment);
         getLocation();
     }
 
@@ -130,7 +127,7 @@ public class NotifierFormActivity extends AppCompatActivity {
             EditText searchInput = this.findViewById(com.google.android.libraries.places.R.id.places_autocomplete_search_input);
 
             if (!locationHashMap.isEmpty() && !searchInput.getText().toString().equals("")) {
-                Map.Entry<String, MyLatLng> entry = locationHashMap.entrySet().iterator().next();
+                Map.Entry<String, LatLng> entry = locationHashMap.entrySet().iterator().next();
                 arrayListForIntentNames.add(entry.getKey());
                 arrayListForIntentLatLng.add(entry.getValue());
                 binding.tvNumberOfLocations.setText(arrayListForIntentNames.size()+"");
@@ -202,7 +199,7 @@ public class NotifierFormActivity extends AppCompatActivity {
                 // Start activity.
                 Intent intent = new Intent(this, NotifierMapsActivity.class);
                 intent.putStringArrayListExtra("NamesFromNotifierForm", arrayListForIntentNames);
-                intent.putParcelableArrayListExtra("CoordinatesFromNotifierForm", arrayListForIntentLatLng);
+//                intent.putParcelableArrayListExtra("CoordinatesFromNotifierForm", arrayListForIntentLatLng);
                 startActivity(intent);
                 finish();
             } else {

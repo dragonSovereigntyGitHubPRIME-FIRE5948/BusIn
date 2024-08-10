@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.sgbusandlocationalarm.Accounts.AccountsManager;
+import com.example.sgbusandlocationalarm.AccountManagement.AccountsManager;
 import com.example.sgbusandlocationalarm.R;
 import com.example.sgbusandlocationalarm.databinding.ViewholderNotifierBinding;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;

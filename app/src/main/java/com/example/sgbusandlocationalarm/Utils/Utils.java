@@ -1,5 +1,7 @@
 package com.example.sgbusandlocationalarm.Utils;
 
+import android.animation.TimeInterpolator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -10,9 +12,13 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.fragment.app.Fragment;
+import androidx.transition.TransitionInflater;
 
 import com.example.sgbusandlocationalarm.BuildConfig;
+import com.example.sgbusandlocationalarm.R;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.text.SimpleDateFormat;
@@ -38,7 +44,7 @@ public class Utils {
     }
 
     /** */
-//    public static void startActivityPutLatLng(Activity activity, Class activityToStart, String extraName, ArrayList<MyLatLng> coordinates) {
+//    public static void startActivityPutLatLng(Activity activity, Class activityToStart, String extraName, ArrayList<String> coordinates) {
 //        Intent intent = new Intent(activity, activityToStart);
 //        intent.putParcelableArrayListExtra("CoordinatesFromNotifierForm", coordinates);
 //        activity.startActivity(intent);
@@ -48,13 +54,17 @@ public class Utils {
     /** */
 
     /** */
+
+    /** */
+    @NonNull
     public static String getEditTextString(Activity activity, EditText editText, String message) {
-        if (editText != null) {
-            return  editText.getText().toString();
+        String text = editText.getText().toString();
+        if (text.replaceAll("\\s", "").equals("")) {
+            Toast.makeText(activity,message,Toast.LENGTH_SHORT).show();
+            return null;
         }
         else {
-            Toast.makeText(activity.getApplicationContext(),message,Toast.LENGTH_SHORT).show();
-            return null;
+            return text;
         }
     }
 
@@ -204,6 +214,24 @@ public class Utils {
             int min = (int) (difference / (1000 * 60)) % 60;
             return min;
         } else {return null;}
+    }
+
+    public static ValueAnimator createValueAnimator(long duration, TimeInterpolator interpolator) {
+        ValueAnimator valueAnimator = new ValueAnimator();
+        valueAnimator.setFloatValues(0f, 100f);
+        valueAnimator.setDuration(duration);
+        valueAnimator.setInterpolator(interpolator);
+        valueAnimator.start();
+        return valueAnimator;
+    }
+
+    // FRAGMENT TRANSITIONS
+    public static void setFragmentTransition(Fragment f) {
+        TransitionInflater inflater = TransitionInflater.from(f.requireContext());
+        f.setReenterTransition(inflater.inflateTransition(R.transition.pop_enter_slide_left));
+        f.setReturnTransition(inflater.inflateTransition(R.transition.pop_exit_slide_right));
+        f.setEnterTransition(inflater.inflateTransition(R.transition.enter_slide_right));
+        f.setExitTransition(inflater.inflateTransition(R.transition.exit_slide_left));
     }
 
     /** Retrieve LTA Datamall API Key from local.properties */

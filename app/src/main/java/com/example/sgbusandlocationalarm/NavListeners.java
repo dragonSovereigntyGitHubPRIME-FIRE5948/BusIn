@@ -1,31 +1,31 @@
 package com.example.sgbusandlocationalarm;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.sgbusandlocationalarm.BusArrival.BusArrivalActivity;
-import com.example.sgbusandlocationalarm.Geofence.NotifierMapsActivity;
+import com.example.sgbusandlocationalarm.BusArrival.BusArrivalFragment;
 import com.example.sgbusandlocationalarm.Notifier.NotifierFormActivity;
-import com.example.sgbusandlocationalarm.Notifier.NotifiersActivity;
 import com.google.android.material.navigation.NavigationBarView;
 
+// TODO
 public class NavListeners {
     public static void navListener(NavigationBarView nav, Context context) {
        nav.setOnItemSelectedListener( item -> {
-            if (item.getItemId() == R.id.homeNav) {
-                context.startActivity(new Intent(context, NotifiersActivity.class));
-                ((Activity) context).finish();
-            }
-            else if (item.getItemId() == R.id.arrivalNav) {
-                context.startActivity(new Intent(context, BusArrivalActivity.class));
-                ((Activity) context).finish();
-            }
-            else if (item.getItemId() == R.id.geofenceNav) {
-                context.startActivity(new Intent(context, NotifierFormActivity.class));
-                ((Activity) context).finish();
-            }
-            return true;
+           navigateToScreen(item.getItemId(), context); return true;
         });
+    }
+
+    private static void navigateToScreen(int screen, Context context) {
+        Intent intent;
+
+        // Screen
+        if (screen == R.id.homeNav) {intent = new Intent(context, MainActivity.class);}
+        else if (screen == R.id.arrivalNav) {intent = new Intent(context, BusArrivalFragment.class);}
+        else if (screen == R.id.geofenceNav) {intent = new Intent(context, NotifierFormActivity.class);}
+        // Default
+        else {intent = new Intent(context, MainActivity.class);}
+
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        context.startActivity(intent);
     }
 }

@@ -1,8 +1,32 @@
 <resources>
+
+    <string name="onboard_message">
+        Welcome to BusTracker! Your seamless travel companion. Experience the convenience of real-time bus tracking with geofence alerts. Stay updated on your bus location and never miss your stop again. Join our community today to enjoy stress-free commuting! Happy travels with BusTracker!
+    </string>
+
     <string name="app_name">SGBusAndLocationAlarm</string>
     <string name="title_activity_maps">MapsActivity</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="Sign_In">Sign In</string>
+    <string name="Email">Email</string>
+    <string name="Password">Password</string>
+    <string name="Have_An_account">Already have an account?</string>
+    <string name="Enter_Account_Credentials">Enter <font color='#FF6200'>credentials</font> for your account.</string>
+
+    <!--  Sign Up  -->
+    <string name="Sign_Up">Sign Up</string>
+    <string name="Enter_Email">Enter an <font color='#FF6200'>email</font> for your account.</string>
+    <string name="Enter_Password">Enter a <font color='#FF6200'>password</font> for your account.</string>
+    <string name="Dont_Have_Account">Don\'t have an account?</string>
+    <string name="Forgot_Password">Forgot your password? <font color='#FF6200'>Reset here!</font></string>
+    <!--  Sign In  -->
+    <string name="Create_A_Geofence">Create a Geofence</string>
+    <string name="Enter_Name_Geofence">Enter a <font color='#FF6200'>name</font> for your Geofence.</string>
+    <string name="Enter_Location_Geofence">Enter the <font color='#FF6200'>location</font> for your Geofence.</string>
+    <string name="Enter_Radius_Geofence">Enter the <font color='#FF6200'>size</font> for your Geofence.</string>
+    <string name="Confirm_Geofence"><font color='#FF6200'>Confirm</font> details for your Geofence.</string>
 
     <string name="Alert_Type">Alert Type</string>
     <string name="Details">Details</string>
@@ -12,6 +36,7 @@
     <string name="Time">Time</string>
     <string name="Add">+</string>
     <string name="Minus">_</string>
+    <string name="Next">Next</string>
 
     <string name="mapbox_access_token">pk.eyJ1IjoibWFyY3VzbmVvIiwiYSI6ImNsbXZ0dmg2bTBreWQyaWxkMGdqZzZiZXoifQ.qfj8jdgycIVDqmYLgt2CXw</string>
 
@@ -48,9 +73,20 @@
         <item>mmdmd</item>
     </string-array>
 
+    <string name="Search_Hint">Search bus stop or bus service</string>
+
+    <string name="No_Data_Found">No Data Found!</string>
+
 
     <!-- Placeholders -->
-    <string name="Stop_Desc_And_Code">Bus Stop Desc and Code</string>
+    <string name="Image_Desc">Image</string>
+    <string name="Image_Button_Desc">Image Button</string>
+    <string name="Tab">Tab</string>
+
+    <string name="Bus_Stop_Desc">Bus Stop Desc</string>
+    <string name="Bus_Stop_Code">(Code)</string>
+    <string name="No_of_Bus">1</string>
+
     <string name="Stop_Route">Bus Stop Route Name</string>
     <string name="title_activity_main2">MainActivity2</string>
     <!-- Strings used for fragments for navigation -->
