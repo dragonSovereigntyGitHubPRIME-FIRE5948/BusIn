@@ -102,29 +102,31 @@
     <!--          -->
     <!-- BUS STOP -->
     <!--          -->
+    <style name="busStopCode" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/on_primary</item>
+        <item name="android:textSize">@dimen/label_small</item>
+        <item name="fontFamily">@font/arial_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="busStopDesc" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/on_background</item>
         <item name="android:textSize">16sp</item>
         <item name="fontFamily">@font/arial_bold</item>
     </style>
 
-    <style name="busStopCode" parent="Widget.AppCompat.TextView">
-        <item name="android:textColor">@color/on_background_grey</item>
-        <item name="android:textSize">@dimen/label</item>
-        <item name="fontFamily">@font/arial</item>
-    </style>
-
-    <style name="busStopAddress" parent="Widget.AppCompat.TextView">
+    <style name="busStopRoad" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/on_background</item>
         <item name="android:textSize">@dimen/label</item>
         <item name="fontFamily">@font/arial</item>
+        <item name="android:textStyle">italic</item>
     </style>
 
 
     <!--   Bus Arrival Details -->
     <style name="busNum" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/on_background</item>
-        <item name="android:textSize">@dimen/body_large</item>
+        <item name="android:textSize">@dimen/body_medium</item>
         <item name="fontFamily">@font/arial_bold</item>
     </style>
 
@@ -157,7 +159,40 @@
 
 
 
+    <style name="busService" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/on_primary</item>
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/arial_bold</item>
+    </style>
+    <style name="busServiceDetails" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/on_background</item>
+        <item name="android:textSize">@dimen/body</item>
+        <item name="fontFamily">@font/arial</item>
+    </style>
 
+    <!--  Bus Route  -->
+    <style name="busRouteServiceDetails" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/on_secondary</item>
+        <item name="android:textSize">@dimen/body_medium</item>
+        <item name="fontFamily">@font/arial</item>
+    </style>
+    <style name="busRouteStopDesc" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/on_secondary</item>
+        <item name="android:textSize">12sp</item>
+        <item name="fontFamily">@font/arial_bold</item>
+    </style>
+    <style name="busRouteStopCode" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/on_secondary</item>
+        <item name="android:textSize">8sp</item>
+        <item name="fontFamily">@font/arial</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+    <style name="busRouteDistance" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/on_secondary</item>
+        <item name="android:textSize">10sp</item>
+        <item name="fontFamily">@font/arial</item>
+        <item name="android:textStyle">italic</item>
+    </style>
 
     <!--          -->
     <!-- GEOFENCE -->

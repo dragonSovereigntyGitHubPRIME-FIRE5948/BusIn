@@ -1,6 +1,6 @@
 package com.example.sgbusandlocationalarm.Notifier;
 
-import com.example.sgbusandlocationalarm.Accounts.AccountsManager;
+import com.example.sgbusandlocationalarm.AccountManagement.AccountsManager;
 import com.example.sgbusandlocationalarm.Constants;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;

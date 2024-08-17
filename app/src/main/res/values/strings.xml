@@ -84,10 +84,17 @@
     <string name="Tab">Tab</string>
 
     <string name="Bus_Stop_Desc">Bus Stop Desc</string>
-    <string name="Bus_Stop_Code">(Code)</string>
-    <string name="No_of_Bus">1</string>
+    <string name="Bus_Stop_Code">273654</string>
 
-    <string name="Stop_Route">Bus Stop Route Name</string>
+    <string name="Bus_Service">969e</string>
+    <string name="Bus_Service_Details">--- 32 Stops</string>
+    <string name="Bus_Service_Operator">(SBST)</string>
+    <string name="Bus_Service_Origin">Raffles Blvd</string>
+    <string name="Bus_Service_Destination">Orchard Road</string>
+
+
+    <string name="Stop_Road">Bus Stop Road</string>
+
     <string name="title_activity_main2">MainActivity2</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>

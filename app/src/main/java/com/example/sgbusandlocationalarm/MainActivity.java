@@ -8,35 +8,45 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.sgbusandlocationalarm.BusArrival.BusArrivalFragment;
-import com.example.sgbusandlocationalarm.BusArrival.BusRouteFragment;
-import com.example.sgbusandlocationalarm.BusArrival.Data.BusServiceDao;
-import com.example.sgbusandlocationalarm.BusArrival.Data.BusStopDao;
-import com.example.sgbusandlocationalarm.BusArrival.Models.BusStop.BusStopViewModel;
-import com.example.sgbusandlocationalarm.Notifier.AllNotifiersFragment;
+import com.example.sgbusandlocationalarm.Bus.BusArrivalFragment;
+import com.example.sgbusandlocationalarm.Bus.BusServicesFragment;
+import com.example.sgbusandlocationalarm.Bus.Data.BusServiceDao;
+import com.example.sgbusandlocationalarm.Bus.Data.BusStopDao;
+import com.example.sgbusandlocationalarm.Bus.Models.BusService.BusServiceViewModel;
+import com.example.sgbusandlocationalarm.Bus.Models.BusStop.BusStopViewModel;
+import com.example.sgbusandlocationalarm.Helpers.DatabaseHelper;
 import com.example.sgbusandlocationalarm.databinding.ActivityMainBinding;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.lifecycle.ViewModelProvider;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.concurrent.CompletableFuture;
 
-    // TODO close db on destroy
+public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
     private ApiService apiService;
-
+    private DatabaseHelper dbHelper;
     private BusStopDao busStopDao;
     private BusServiceDao busServiceDao;
 
     // private Fragment HomeFragment;
     private final BusArrivalFragment busArrivalFragment = new BusArrivalFragment();
-    private final BusRouteFragment busRouteFragment = new BusRouteFragment();
-    private final AllNotifiersFragment allNotifiersFragment = new AllNotifiersFragment();
-
+    private final BusServicesFragment busServicesFragment = new BusServicesFragment();
+    //    private final AllNotifiersFragment allNotifiersFragment = new AllNotifiersFragment();
     // Bundle Keys
-    private BusStopViewModel viewModel;
+    private BusStopViewModel busStopsViewModel;
+    private BusServiceViewModel busServiceViewModel;
+
+    // TODO
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (dbHelper != null) {
+            dbHelper.close();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,34 +54,23 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Initialize DAOs
+        // Initialize DBHelper & DAOs
+        dbHelper = DatabaseHelper.getInstance(this);
         busStopDao = new BusStopDao(this);
         busServiceDao = new BusServiceDao(this);
 
         // Insert bus data if it does not exist
-        if (!busStopDao.hasData() && !busServiceDao.hasData()) getBusDataAndInsertDb();
+        // TODO check if origina nd estinaiton null cause 911
+        if (!busStopDao.hasData() || !busServiceDao.hasData()) getBusDataAndInsertDb();
 
         // Initialize ViewModel
-        viewModel = new ViewModelProvider(this).get(BusStopViewModel.class);
-        setBusStopViewModel();
+        busStopsViewModel = new ViewModelProvider(this).get(BusStopViewModel.class);
+        busServiceViewModel = new ViewModelProvider(this).get(BusServiceViewModel.class);
+        setViewModels();
 
         // Fragment Management
         setupFragments();
         tabListener();
-    }
-
-    // TODO
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        // TODO
-        // Close database connections
-        if (busStopDao != null) {
-            //busStopDao.close();
-        }
-        if (busServiceDao != null) {
-            //busServiceDao.close();
-        }
     }
 
     // Fragment Set Up & Management
@@ -82,8 +81,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Add all fragments and hide them initially except the first one
         fragmentTransaction.add(fragmentContainer, busArrivalFragment, "Bus Arrival");
-        fragmentTransaction.add(fragmentContainer, busRouteFragment, "Bus Route").hide(busRouteFragment);
-        fragmentTransaction.add(fragmentContainer, allNotifiersFragment, "All Notifiers").hide(allNotifiersFragment);
+        fragmentTransaction.add(fragmentContainer, busServicesFragment, "Bus Services").hide(busServicesFragment);
+//        fragmentTransaction.add(fragmentContainer, allNotifiersFragment, "All Notifiers").hide(allNotifiersFragment);
         fragmentTransaction.commit();
     }
 
@@ -114,18 +113,19 @@ public class MainActivity extends AppCompatActivity {
                 switch (tab.getPosition()) {
                     case 0:
                         fragmentToShow = busArrivalFragment;
-                        fragmentToHide1 = busRouteFragment;
-                        fragmentToHide2 = allNotifiersFragment;
+                        fragmentToHide1 = busServicesFragment;
+//                        fragmentToHide2 = allNotifiersFragment;
                         break;
                     case 1:
-                        fragmentToShow = busRouteFragment;
+                        fragmentToShow = busServicesFragment;
                         fragmentToHide1 = busArrivalFragment;
-                        fragmentToHide2 = allNotifiersFragment;
+//                        fragmentToHide2 = allNotifiersFragment;
                         break;
                     case 2:
-                        fragmentToShow = allNotifiersFragment;
+                        // TODO
+                        fragmentToShow = busServicesFragment;
                         fragmentToHide1 = busArrivalFragment;
-                        fragmentToHide2 = busRouteFragment;
+                        fragmentToHide2 = busServicesFragment;
                         break;
                     default:
                         return;
@@ -134,24 +134,30 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction()
                         .show(fragmentToShow)
                         .hide(fragmentToHide1)
-                        .hide(fragmentToHide2)
+//                        .hide(fragmentToHide2)
                         .commit();
             }
+
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {}
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {}
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
         });
     }
 
     // DB Read
-    private void setBusStopViewModel() {
-        // Start a new single thread sending a request to LTA Server
-        busStopDao.read().thenAccept(busStops -> runOnUiThread(() -> {
-            // TODO ui
-            // Set data in ViewModel
-            viewModel.setBusStops(busStops);
-        })).exceptionally(throwable -> {
+    private void setViewModels() {
+        // Create CompletableFutures for each read operation
+        CompletableFuture<Void> busStopsFuture = busStopDao.read().thenAccept(busStops ->
+                runOnUiThread(() -> {
+                    // TODO ui
+                    // Set data in ViewModel
+                    busStopsViewModel.setBusStops(busStops);
+                })
+        ).exceptionally(throwable -> {
             runOnUiThread(() -> {
                 // binding.progressBarCyclic.setVisibility(View.GONE);
                 Toast.makeText(getApplicationContext(), "Failed to Load Data", Toast.LENGTH_SHORT).show();
@@ -159,41 +165,70 @@ public class MainActivity extends AppCompatActivity {
             return null;
         });
 
-        // TODO close after reading
+        CompletableFuture<Void> busServicesFuture = busServiceDao.read().thenAccept(busServices ->
+                runOnUiThread(() -> {
+                    // TODO ui
+                    // Set data in ViewModel
+                    busServiceViewModel.setDataList(busServices);
+                })
+        ).exceptionally(throwable -> {
+            runOnUiThread(() -> {
+                // binding.progressBarCyclic.setVisibility(View.GONE);
+                Toast.makeText(getApplicationContext(), "Failed to Load Data", Toast.LENGTH_SHORT).show();
+            });
+            return null;
+        });
+
+        // Combine both futures into a single future that completes when both are done
+        CompletableFuture<Void> allOf = CompletableFuture.allOf(busStopsFuture, busServicesFuture);
+
+        // After all futures complete, close the database
+        allOf.whenComplete((result, throwable) -> dbHelper.close());
+
         // TODO fail show retry button
         // TODO Weekly API calls to update data
     }
 
     // DB Insert
+    // *** Make sure to Close
     private void getBusDataAndInsertDb() {
         // Instantiate
-        // TODO make sure only 1 instance
+        // TODO ensure instance is destroyed after usage
+        // TODO how to use singleton pattern
         apiService = ApiService.getInstance();
 
-        // Bus Stops
-        apiService.fetchBusStops().thenAccept(busStops -> {
+        // TODO check implementation
+        try {
+            // Bus Stops
+            apiService.fetchBusStops()
+                    .thenCompose(busStops -> {
+                        busStopDao.create(busStops);
+                        // Chain the fetchBusRoutes call
+                        return apiService.fetchBusRoutes()
+                                .thenCompose(busRoutes -> {
+                                    // Chain the fetchBusServices call
+                                    return apiService.fetchBusServices()
+                                            .thenAccept(busServices -> {
+                                                // Create bus services in DAO
+                                                busServiceDao.create(busServices, busRoutes, busStops);
+                                            });
+                                });
+                    })
+                    .exceptionally(throwable -> {
+                        // Handle exceptions
+                        throwable.printStackTrace();
+                        return null;
+                    })
+                    .whenComplete((result, throwable) -> {
+                        // This block will run whether the previous operations succeeded or failed
+                        dbHelper.close();
+                    });
 
-            // Bus Routes
-            apiService.fetchBusRoutes().thenAccept(busRoutes -> {
-                busServiceDao.create(busRoutes, busStops);
-            }).exceptionally(throwable -> {
-                throwable.printStackTrace();
-                return null;
-            });
-
-            busStopDao.create(busStops);
-
-        }).exceptionally(throwable -> {
-            throwable.printStackTrace();
-            return null;
-        });
-
-        // Bus Services
-        apiService.fetchBusServices().thenAccept(busServices -> {
-            busServiceDao.create(busServices);
-        }).exceptionally(throwable -> {
-            throwable.printStackTrace();
-            return null;
-        });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+    // Method to get the binding
+    public ActivityMainBinding getBinding() {return binding;}
 }

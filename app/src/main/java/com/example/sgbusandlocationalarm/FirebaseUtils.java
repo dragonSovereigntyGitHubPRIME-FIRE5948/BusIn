@@ -13,7 +13,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sgbusandlocationalarm.AccountManagement.AccountsManager;
-import com.example.sgbusandlocationalarm.BusArrival.BusArrivalFragment;
+import com.example.sgbusandlocationalarm.Bus.BusArrivalFragment;
 import com.firebase.ui.auth.AuthMethodPickerLayout;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;

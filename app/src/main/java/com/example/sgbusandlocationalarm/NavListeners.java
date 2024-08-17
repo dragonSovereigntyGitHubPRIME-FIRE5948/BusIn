@@ -3,7 +3,7 @@ package com.example.sgbusandlocationalarm;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.sgbusandlocationalarm.BusArrival.BusArrivalFragment;
+import com.example.sgbusandlocationalarm.Bus.BusArrivalFragment;
 import com.example.sgbusandlocationalarm.Notifier.NotifierFormActivity;
 import com.google.android.material.navigation.NavigationBarView;
 

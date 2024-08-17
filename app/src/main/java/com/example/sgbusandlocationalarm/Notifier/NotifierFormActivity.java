@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.sgbusandlocationalarm.Constants;
+import com.example.sgbusandlocationalarm.MyLatLng;
 import com.example.sgbusandlocationalarm.NavListeners;
 import com.example.sgbusandlocationalarm.R;
 
@@ -57,12 +58,12 @@ public class NotifierFormActivity extends AppCompatActivity {
 
     private NotifierManager notifierManager = NotifierManager.getInstance();
     private AutocompleteSupportFragment autocompleteFragment;
-    private HashMap<String, com.google.android.gms.maps.model.LatLng> locationHashMap;
+    private HashMap<String, MyLatLng> locationHashMap;
 
 
     // Intent
     private ArrayList<String> arrayListForIntentNames = new ArrayList<>();
-    private ArrayList<LatLng> arrayListForIntentLatLng = new ArrayList<>();
+    private ArrayList<MyLatLng> arrayListForIntentLatLng = new ArrayList<>();
 
     // LIFECYCLE //
     @Override
@@ -94,7 +95,7 @@ public class NotifierFormActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        GoogleUtils.configureAutoCompleteUI(this, autocompleteFragment);
+//        GoogleUtils.configureAutoCompleteUI(this, autocompleteFragment);
         getLocation();
     }
 
@@ -127,7 +128,7 @@ public class NotifierFormActivity extends AppCompatActivity {
             EditText searchInput = this.findViewById(com.google.android.libraries.places.R.id.places_autocomplete_search_input);
 
             if (!locationHashMap.isEmpty() && !searchInput.getText().toString().equals("")) {
-                Map.Entry<String, LatLng> entry = locationHashMap.entrySet().iterator().next();
+                Map.Entry<String, MyLatLng> entry = locationHashMap.entrySet().iterator().next();
                 arrayListForIntentNames.add(entry.getKey());
                 arrayListForIntentLatLng.add(entry.getValue());
                 binding.tvNumberOfLocations.setText(arrayListForIntentNames.size()+"");

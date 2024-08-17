@@ -1,4 +1,4 @@
-package com.example.sgbusandlocationalarm.BusArrival;
+package com.example.sgbusandlocationalarm.Bus;
 
 import android.animation.ObjectAnimator;
 import android.os.Handler;
@@ -7,13 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.sgbusandlocationalarm.ApiService;
-import com.example.sgbusandlocationalarm.BusArrival.Models.BusArrival.BusArrivalModel;
-import com.example.sgbusandlocationalarm.BusArrival.Models.BusStop.BusStopModel;
+import com.example.sgbusandlocationalarm.Bus.Models.BusArrival.BusArrivalModel;
+import com.example.sgbusandlocationalarm.Bus.Models.BusStop.BusStopModel;
 import com.example.sgbusandlocationalarm.R;
 import com.example.sgbusandlocationalarm.Utils.Utils;
 import com.example.sgbusandlocationalarm.databinding.ViewholderBusStopBinding;
@@ -37,8 +35,7 @@ public class BusStopAdapter extends RecyclerView.Adapter<BusStopAdapter.BusViewH
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
 
     @Override
-    public void onItemClick(int position, BusArrivalModel item) {
-    }
+    public void onItemClick(int position, BusArrivalModel item) {}
 
     // Interface
     public interface OnItemClickListener {
@@ -55,10 +52,7 @@ public class BusStopAdapter extends RecyclerView.Adapter<BusStopAdapter.BusViewH
     @Override
     public BusViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // inflate view BusStopModel layout
-        View itemsList = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.viewholder_bus_stop,
-                parent,
-                false);
+        View itemsList = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_bus_stop, parent, false);
         return new BusViewHolder(itemsList);
     }
 
@@ -93,9 +87,8 @@ public class BusStopAdapter extends RecyclerView.Adapter<BusStopAdapter.BusViewH
     }
 
     //
-    // FUCCTIONS
+    // FUNCTIONS
     //
-
     public void setFilteredList(List<BusStopModel> filteredList) {
         this.listBusStopDetails = filteredList;
         notifyDataSetChanged();
@@ -256,7 +249,7 @@ public class BusStopAdapter extends RecyclerView.Adapter<BusStopAdapter.BusViewH
          */
         public void setUpUI(BusStopModel model) {
             Utils.setTextView(binding.tvDesc, model.getDescription());
-            Utils.setTextView(binding.tvCode, "(" + model.getBusStopCode() + ")");
+            Utils.setTextView(binding.tvCode, model.getBusStopCode());
             Utils.setTextView(binding.tvRoadName, model.getRoadName());
 
 //            String first;

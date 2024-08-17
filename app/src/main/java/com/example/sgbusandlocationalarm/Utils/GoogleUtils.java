@@ -62,7 +62,7 @@ public class GoogleUtils  {
         // text hint color
         e.setHintTextColor(ContextCompat.getColor(activity, R.color.hint));
         // text color
-        e.setTextColor(ContextCompat.getColor(activity, R.color.on_surface));
+//        e.setTextColor(ContextCompat.getColor(activity, R.color.on_surface));
         // font
         Typeface face = ResourcesCompat.getFont(activity,R.font.montserrat_medium);
         e.setTypeface(face);

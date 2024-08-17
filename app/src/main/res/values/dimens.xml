@@ -1,15 +1,22 @@
 <resources>
 <!--  display headline title body label  -->
-    <dimen name="body_large">23sp</dimen>
+    <dimen name="headline">20sp</dimen>
+    <dimen name="title">18sp</dimen>
+
+    <dimen name="body_medium">16sp</dimen>
     <dimen name="body">14sp</dimen>
 
     <dimen name="label">12sp</dimen>
-    <dimen name="label_small">7sp</dimen>
+    <dimen name="label_small">9sp</dimen>
 
     <dimen name="border_thickness_thin">1sp</dimen>
     <dimen name="border_thickness">1.5sp</dimen>
-    <dimen name="radius">7sp</dimen>
 
+    <dimen name="radius">7sp</dimen>
+    <dimen name="radius_small">3sp</dimen>
+
+
+    <dimen name="app_padding_vertical">20sp</dimen>
     <dimen name="app_padding_horizontal">15sp</dimen>
 
 <!--  Action Bar  -->
@@ -26,15 +33,21 @@
 
 
 
-    <dimen name="gap">15sp</dimen>
+    <dimen name="gap">20sp</dimen>
 
 <!-- Bus stop card   -->
-    <dimen name="bus_stop_card_gap">15sp</dimen>
-    <dimen name="bus_stop_card_padding_vertical">15sp</dimen>
-    <dimen name="bus_stop_card_padding_horizontal">20sp</dimen>
+    <dimen name="bus_stop_gap">15sp</dimen>
+    <dimen name="bus_stop_pad_v">15sp</dimen>
+    <dimen name="bus_stop_pad_h">20sp</dimen>
     <dimen name="bus_stop_icon">18sp</dimen>
 
+<!--  Bus Arrival  -->
     <dimen name="bus_arrival_card_gap">5sp</dimen>
+
+<!--  Bus Service  -->
+    <dimen name="bus_service_gap">3sp</dimen>
+    <dimen name="bus_service_type_icon">11sp</dimen>
+
 
 
     <dimen name="fab_margin">16dp</dimen>

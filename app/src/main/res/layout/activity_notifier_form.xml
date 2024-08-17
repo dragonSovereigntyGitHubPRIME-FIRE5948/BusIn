@@ -8,8 +8,8 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        style="@style/styleTopBarBackground"
-        android:id="@+id/loTitle"
+        style="@style/actionBarBackground"
+        android:id="@+id/actionBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -24,7 +24,6 @@
 
         <TextView
             android:id="@+id/tvTitle"
-            style="@style/styleTopBarTitle"
             android:layout_marginStart="10sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -43,7 +42,7 @@
         android:paddingBottom="0sp"
         android:background="@drawable/bg_curve_background"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/loTitle"
+        app:layout_constraintTop_toBottomOf="@id/actionBar"
         app:layout_constraintBottom_toTopOf="@+id/nav">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -68,7 +67,7 @@
 
                     <TextView
                         android:id="@+id/tvSection1"
-                        style="@style/styleLabel"
+                        style="@style/HeadlineTheme"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/notifier_form_label"
@@ -120,7 +119,7 @@
 
                     <TextView
                         android:id="@+id/tvSection2"
-                        style="@style/styleLabel"
+                        style="@style/HeadlineTheme"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/notifier_form_label"
@@ -167,7 +166,6 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        style="@style/styleText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="4sp"
@@ -175,7 +173,6 @@
 
                     <TextView
                         android:id="@+id/tvNumberOfLocations"
-                        style="@style/styleText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="4sp"
@@ -273,7 +270,7 @@
 
                         <TextView
                             android:id="@+id/tvSection3"
-                            style="@style/styleLabel"
+                            style="@style/HeadlineTheme"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/notifier_form_label"
@@ -317,7 +314,7 @@
 
                         <TextView
                             android:id="@+id/tvSection4"
-                            style="@style/styleLabel"
+                            style="@style/HeadlineTheme"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"

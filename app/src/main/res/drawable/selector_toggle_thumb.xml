@@ -8,7 +8,7 @@
                 android:width="3dp"
                 />
             <solid
-                android:color="@color/surface"/>
+                android:color="@color/background"/>
             <size
                 android:width="22dp"
                 android:height="22dp"/>
@@ -23,7 +23,7 @@
                 android:width="3sp"
                 />
             <solid
-                android:color="@color/surface"/>
+                android:color="@color/background"/>
             <size
                 android:width="22sp"
                 android:height="22sp"/>
